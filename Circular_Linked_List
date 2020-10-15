@@ -1,0 +1,154 @@
+#include <stdio.h>
+
+
+typedef struct node{
+    int data;
+    struct node *next;
+    
+}node;
+
+
+node* delete(node *head,int index){
+    node *p=head;
+    node *q=head;
+    while((index-2)!=0){
+        p=p->next;
+        index=index-1;
+    }
+    q=p->next;
+    p->next=q->next;
+    q->next=NULL;
+    free(q);
+    return head;
+}
+
+node* inserts(node *head,int val){
+    node* p=head;
+    node* temp = (node *)malloc(sizeof(node));
+    
+    temp->data=val;
+   
+    temp->next=p;
+    while(p->next!=head){
+        p=p->next;
+    }
+    p->next=temp;
+    head=temp;
+    return head;
+    
+}
+
+node* inserte(node *head,int val){
+    node* p=head;
+    node* temp = (node *)malloc(sizeof(node));
+    temp->next=head;
+    temp->data=val;
+   
+    while(p->next!=head){
+        p=p->next;
+    }
+    p->next=temp;
+    return head;
+    
+}
+
+void print(node* l1) 
+{ 
+     node* temp = l1; 
+   
+  
+    
+     do{ 
+        
+         
+        printf("%d ",temp->data); 
+  
+       
+        temp = temp->next; 
+  
+        
+    } while (temp != l1);
+    printf("%d",temp->data);
+    printf("\n");
+}
+
+node* create(int n){
+    node *p,*head;
+    int i;
+    head=(node *)malloc(sizeof(node));
+    head->next=NULL;
+    printf("Enter head data - ");
+    scanf("%d",&(head->data));
+    p=head;
+    for(i=1;i<n;i++){
+        p->next=(node *)malloc(sizeof(node));
+        p=p->next;
+        printf("Enter element [%d] - ",i);
+        scanf("%d",&(p->data));
+        p->next=NULL;
+    }
+    p->next=head;
+    return head;
+}
+
+node* insert(node *head,int index,int val){
+    node *q=head;
+    node *p=(node *)malloc(sizeof(node));
+    p->data=val;
+    p->next=NULL;
+    
+    for(int i=1;i<index-1;i++){
+        q=q->next;
+    }
+    p->next=q->next;
+    q->next=p;
+    return head;
+    
+    
+}
+
+int main()
+{
+    int n,x;
+    int index,val;
+    node *head;
+    printf("Enter no.of elements - ");
+    scanf("%d",&n);
+    head=create(n);
+    while(1){
+    printf(" 0.EXIT \n 1.Insert at index\n 2.Insert at start\n 3. Insert at end\n 4.Delete Node \n ");
+    printf("Select from above - ");
+    scanf("%d",&x);
+    if(x==0){
+        break;
+    }
+    switch(x){
+        case 1: 
+                printf("Enter index - ");
+                scanf("%d",&index);
+                printf("Enter data - ");
+                scanf("%d",&val);
+                head=insert(head,index,val);
+                break;
+        case 2:
+                printf("Enter data - ");
+                scanf("%d",&val);
+                head=inserts(head,val);
+                break;
+        case 3:
+                printf("Enter data - ");
+                scanf("%d",&val);
+                head=inserte(head,val);
+                break;
+        case 4:
+                printf("Enter index to be deleted - ");
+                scanf("%d",&index);
+                head=delete(head,index);
+        
+    }
+    printf("Result - ");
+    print(head);
+    printf("***************************************************\n");
+}
+    return 0;
+}
